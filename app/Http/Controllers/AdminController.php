@@ -37,7 +37,7 @@ class AdminController extends Controller
             'username' => trim($request->username),
             'nama'     => trim($request->nama),
             'peran'    => strtolower($request->peran),
-            'password' => sha1(trim($request->username)), // password default sama dengan username
+            'password' => sha1(trim($request->username)),
             'pin'      => sha1('1234'),
         ]);
 

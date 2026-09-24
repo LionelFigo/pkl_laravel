@@ -19,7 +19,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('admin.mahasiswa.index')}}" class="nav-link {{request ()->routeIs('admin.mahasiswa.index') ? 'active' : ''}}">
+            <a href="{{route('admin.mahasiswa.index')}}" class="nav-link {{request ()->routeIs('admin.mahasiswa.*') ? 'active' : ''}}">
               <i class="nav-icon fas fa-user-graduate"></i>
               <p>
                 Data Mahasiswa
@@ -27,7 +27,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('admin.dosen.index')}}" class="nav-link {{request ()->routeIs('admin.dosen.index') ? 'active' : ''}}">
+            <a href="{{route('admin.dosen.index')}}" class="nav-link {{request ()->routeIs('admin.dosen.*') ? 'active' : ''}}">
               <i class="nav-icon fas fa-user-tie"></i>
               <p>
                 Data Dosen
@@ -35,10 +35,34 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('admin.matkul.index')}}" class="nav-link {{request ()->routeIs('admin.matkul.index') ? 'active' : ''}}">
+            <a href="{{route('admin.periode.index')}}" class="nav-link {{request ()->routeIs('admin.periode.*') ? 'active' : ''}}">
+              <i class="nav-icon fas fa-calendar"></i>
+              <p>
+                Data Periode Akademik
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.jurusan.index')}}" class="nav-link {{request ()->routeIs('admin.jurusan.*') ? 'active' : ''}}">
+              <i class="nav-icon fas fa-university"></i>
+              <p>
+                Data Jurusan
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.matkul.index')}}" class="nav-link {{request ()->routeIs('admin.matkul.*') ? 'active' : ''}}">
               <i class="nav-icon fas fa-book"></i>
               <p>
                 Data Mata Kuliah
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.kelas.index')}}" class="nav-link {{request ()->routeIs('admin.kelas.*') ? 'active' : ''}}">
+              <i class="nav-icon fas fa-door-open"></i>
+              <p>
+                Data Kelas Mata Kuliah
               </p>
             </a>
           </li>

@@ -78,39 +78,39 @@
                 <div class="container-fluid">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Data Mahasiswa</h3>
+                            <h3 class="card-title">Edit Data dosen</h3>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.mahasiswa.update', $mahasiswa->nim) }}" method="POST">
+                            <form action="{{ route('admin.dosen.update', $dosen->nik) }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
                                 <div class="form-group">
-                                    <label for="nim">NIM</label>
-                                    <input type="text" class="form-control" name="nim" id="nim" value="{{ $mahasiswa->nim }}" readonly>
+                                    <label for="nik">NIK</label>
+                                    <input type="text" class="form-control" name="nik" id="nik" value="{{ $dosen->nik }}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" name="nama" id="nama" value="{{ old('nama', $mahasiswa->nama) }}" required>
+                                    <input type="text" class="form-control" name="nama" id="nama" value="{{ old('nama', $dosen->nama) }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="kontak">Kontak</label>
-                                    <input type="number" name="kontak" id="kontak" maxlength="13" value="{{ old('kontak', $mahasiswa->kontak) }}" class="form-control">
+                                    <input type="number" name="kontak" id="kontak" maxlength="13" value="{{ old('kontak', $dosen->kontak) }}" class="form-control">
                                 </div>
                                  <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" name="email" id="email" value="{{ old('email', $mahasiswa->email) }}" required>
+                                    <input type="email" class="form-control" name="email" id="email" value="{{ old('email', $dosen->email) }}" required>
                                 </div>
                                  <div class="form-group">
                                     <label for="kelamin">Jenis Kelamin</label>
                                     <select name="kelamin" class="form-control">
                                         <option value="">--Piih jenis Kelamin--</option>
-                                        <option value="l" {{ old('kelamin', $mahasiswa->kelamin) == 'l' ? 'selected' : '' }}>Laki-Laki</option>
-                                        <option value="p" {{ old('kelamin', $mahasiswa->kelamin) == 'p' ? 'selected' : '' }}>Perempuan</option>
+                                        <option value="l" {{ old('kelamin', $dosen->kelamin) == 'l' ? 'selected' : '' }}>Laki-Laki</option>
+                                        <option value="p" {{ old('kelamin', $dosen->kelamin) == 'p' ? 'selected' : '' }}>Perempuan</option>
                                     </select>
                                 </div>
                                 <div class="modal-footer justify-content-between px-0">
-                                    <a href="{{ route('admin.mahasiswa.index') }}" class="btn btn-default">Batal</a>
+                                    <a href="{{ route('admin.dosen.index') }}" class="btn btn-default">Batal</a>
                                     <button type="submit" class="btn btn-primary" name="edit">
                                     <i class="fas fa-save mr-1"></i> Edit
                                     </button>

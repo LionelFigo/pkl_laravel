@@ -79,33 +79,37 @@
       <div class="container-fluid">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title"><strong>Edit Data Pengguna</strong></h3>
+            <h3 class="card-title"><strong>Edit Data Mata Kuliah</strong></h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <form action="{{ route('admin.user.update', $user->id) }}" method="POST">
+            <form action="{{ route('admin.periode.update', $periode->kode_akd) }}" method="POST">
               @csrf
               @method('PUT')
               <div class="form-group">
-                <label for="username_disable">Username</label>
-                <input type="text" class="form-control" id="username_disable" name="username_disable" placeholder="Masukkan Username" value="{{ $user->username }}" disabled>
-                <input type="hidden" id="username" name="username" value="{{ $user->username }}">
+                <label for="kode_akd">Kode Akademik</label>
+                <input type="text" class="form-control" id="kode_akd" name="kode_akd" placeholder="Masukkan" value="{{ $periode->kode_akd }}" readonly>
               </div>
               <div class="form-group">
-                <label for="nama">Nama</label>
-                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama" value="{{ old('nama', $user->nama) }}" required>
+                <label for="semester">Semester</label>
+                <select name="semester" class="form-control">
+                    <option value="GL" {{ old('semester', $periode->semester) == 'GL' ? 'selected' : '' }}>Ganjil</option>
+                    <option value="GN" {{ old('semester', $periode->semester) == 'GN' ? 'selected' : '' }}>Genap</option>
+                </select>
               </div>
               <div class="form-group">
-                <label for="peran">Pilih Peran</label>
-                <select class="form-control" id="peran" name="peran" required>
-                  <option value="">-- Pilih Peran --</option>
-                  <option value="m" {{ old('peran', $user->peran) == 'm' ? 'selected' : '' }}>Mahasiswa</option>
-                  <option value="d" {{ old('peran', $user->peran) == 'd' ? 'selected' : '' }}>Dosen</option>
-                  <option value="a" {{ old('peran', $user->peran) == 'a' ? 'selected' : '' }}>Admin</option>
+                <label for="tahun">Tahun</label>
+                <input type="number" class="form-control" id="tahun" name="tahun" placeholder="Masukkan SKS" value="{{ old('tahun', $periode->tahun) }}" required>
+              </div>
+              <div class="form-group">
+                <label for="is_active">Status</label>
+                <select name="is_active" class="form-control">
+                    <option value="1" {{ old('is_active', $periode->is_active) == '1' ? 'selected' : '' }}>Aktif</option>
+                    <option value="0" {{ old('semester', $periode->is_active) == '0' ? 'selected' : '' }}>Non Aktif</option>
                 </select>
               </div>
               <div class="modal-footer justify-content-between px-0">
-                <a href="{{ route('admin.data_administrator') }}" class="btn btn-default">Batal</a>
+                <a href="{{ route('admin.periode.index') }}" class="btn btn-default">Batal</a>
                 <button type="submit" class="btn btn-primary" name="edit">
                   <i class="fas fa-save mr-1"></i> Edit
                 </button>

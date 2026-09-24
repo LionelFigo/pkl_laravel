@@ -79,33 +79,23 @@
       <div class="container-fluid">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title"><strong>Edit Data Pengguna</strong></h3>
+            <h3 class="card-title"><strong>Edit Data Mata Kuliah</strong></h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <form action="{{ route('admin.user.update', $user->id) }}" method="POST">
+            <form action="{{ route('admin.jurusan.update', $jurusan->kode_jurusan) }}" method="POST">
               @csrf
               @method('PUT')
               <div class="form-group">
-                <label for="username_disable">Username</label>
-                <input type="text" class="form-control" id="username_disable" name="username_disable" placeholder="Masukkan Username" value="{{ $user->username }}" disabled>
-                <input type="hidden" id="username" name="username" value="{{ $user->username }}">
+                <label for="kode_jurusan">Kode Jurusan</label>
+                <input type="text" class="form-control" id="kode_jurusan" name="kode_jurusan" placeholder="Masukkan" value="{{ $jurusan->kode_jurusan }}" readonly>
               </div>
               <div class="form-group">
-                <label for="nama">Nama</label>
-                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama" value="{{ old('nama', $user->nama) }}" required>
-              </div>
-              <div class="form-group">
-                <label for="peran">Pilih Peran</label>
-                <select class="form-control" id="peran" name="peran" required>
-                  <option value="">-- Pilih Peran --</option>
-                  <option value="m" {{ old('peran', $user->peran) == 'm' ? 'selected' : '' }}>Mahasiswa</option>
-                  <option value="d" {{ old('peran', $user->peran) == 'd' ? 'selected' : '' }}>Dosen</option>
-                  <option value="a" {{ old('peran', $user->peran) == 'a' ? 'selected' : '' }}>Admin</option>
-                </select>
+                <label for="nama_jurusan">Nama Jurusan</label>
+                <input type="text" class="form-control" id="nama_jurusan" name="nama_jurusan" placeholder="Masukkan Nama Jurusan" value="{{ old('nama_jurusan', $jurusan->nama_jurusan) }}" required>
               </div>
               <div class="modal-footer justify-content-between px-0">
-                <a href="{{ route('admin.data_administrator') }}" class="btn btn-default">Batal</a>
+                <a href="{{ route('admin.jurusan.index') }}" class="btn btn-default">Batal</a>
                 <button type="submit" class="btn btn-primary" name="edit">
                   <i class="fas fa-save mr-1"></i> Edit
                 </button>

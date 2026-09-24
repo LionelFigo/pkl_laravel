@@ -121,7 +121,7 @@
                                     <i class="fas fa-trash"></i> Hapus
                                   </button>
                                 @else
-                                  <button type="button" class="btn btn-danger btn-sm btn-delete-user" data-id="{{ $user->id }}" data-username="{{ $user->username }}" data-url="{{ route('admin.user.destroy', $user->id) }}">
+                                  <button type="button" class="btn btn-danger btn-sm btn-delete-user" data-id="{{ $user->id }}" data-username="{{ $user->username }}" data-url="{{ route('admin.user.destroy', $user->id) }}" onclick="return confirm('Yakin Hapus?')">
                                     <i class="fas fa-trash"></i> Hapus
                                   </button>
                                 @endif

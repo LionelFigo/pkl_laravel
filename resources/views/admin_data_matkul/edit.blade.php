@@ -79,33 +79,31 @@
       <div class="container-fluid">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title"><strong>Edit Data Pengguna</strong></h3>
+            <h3 class="card-title"><strong>Edit Data Mata Kuliah</strong></h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <form action="{{ route('admin.user.update', $user->id) }}" method="POST">
+            <form action="{{ route('admin.matkul.update', $matkul->kode_makul) }}" method="POST">
               @csrf
               @method('PUT')
               <div class="form-group">
-                <label for="username_disable">Username</label>
-                <input type="text" class="form-control" id="username_disable" name="username_disable" placeholder="Masukkan Username" value="{{ $user->username }}" disabled>
-                <input type="hidden" id="username" name="username" value="{{ $user->username }}">
+                <label for="kode_makul">Kode Matkul</label>
+                <input type="text" class="form-control" id="kode_makul" name="kode_makul" placeholder="Masukkan" value="{{ $matkul->kode_makul }}" readonly>
               </div>
               <div class="form-group">
-                <label for="nama">Nama</label>
-                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama" value="{{ old('nama', $user->nama) }}" required>
+                <label for="nama_makul">Nama Matkul</label>
+                <input type="text" class="form-control" id="nama_makul" name="nama_makul" placeholder="Masukkan Nama" value="{{ old('nama', $matkul->nama_makul) }}" required>
               </div>
               <div class="form-group">
-                <label for="peran">Pilih Peran</label>
-                <select class="form-control" id="peran" name="peran" required>
-                  <option value="">-- Pilih Peran --</option>
-                  <option value="m" {{ old('peran', $user->peran) == 'm' ? 'selected' : '' }}>Mahasiswa</option>
-                  <option value="d" {{ old('peran', $user->peran) == 'd' ? 'selected' : '' }}>Dosen</option>
-                  <option value="a" {{ old('peran', $user->peran) == 'a' ? 'selected' : '' }}>Admin</option>
-                </select>
+                <label for="jml_sks">Jumlah SKS</label>
+                <input type="number" class="form-control" id="jml_sks" name="jml_sks" placeholder="Masukkan SKS" value="{{ old('nama', $matkul->jml_sks) }}" required>
+              </div>
+              <div class="form-group">
+                <label for="jml_cpmk">Jumlah CPMK</label>
+                <input type="number" class="form-control" id="jml_cpmk" name="jml_cpmk" placeholder="Masukkan CPMK" value="{{ old('nama', $matkul->jml_cpmk) }}" required>
               </div>
               <div class="modal-footer justify-content-between px-0">
-                <a href="{{ route('admin.data_administrator') }}" class="btn btn-default">Batal</a>
+                <a href="{{ route('admin.matkul.index') }}" class="btn btn-default">Batal</a>
                 <button type="submit" class="btn btn-primary" name="edit">
                   <i class="fas fa-save mr-1"></i> Edit
                 </button>

@@ -92,12 +92,12 @@
         @endif
         <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Data Mahasiswa</h3>
+                <h3 class="card-title">Data Dosen</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <button type="button" class="btn btn-danger mb-2"data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i> Tambah Data</button>
-                <a href="#" onclick="return confirm('Yakin ingin mereset Data?')" type="button" class="btn btn-danger mb-2"><i class="fas fa-exclamation-triangle"> Reset Data</i></a>
+                <a href="{{ route('admin.dosen.reset') }}" onclick="return confirm('Yakin ingin mereset Data?')" type="button" class="btn btn-danger mb-2"><i class="fas fa-exclamation-triangle"> Reset Data</i></a>
                 <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modal-impor"><i class="fas fa-file-excel"></i> Impor Data</button>
                 <button type="button" class="btn btn-danger mb-2" data-toggle="modal" data-target="#modal-download"><i class="fas fa-download"></i> Download Template</button>
                 <a href="#" class="btn btn-danger mb-2" target="_blank" type="button"><i class="fas fa-file-pdf"> Export pdf</i></a>
@@ -140,10 +140,8 @@
                             </button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-edit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button></button>
+                            <a href="{{ route('admin.dosen.edit', $data->nik) }}" class="btn btn-warning btn-sm" type="button"><i class="fas fa-edit"></i></a>
+                            <a href="{{ route('admin.dosen.hapus', $data->nik) }}" class="btn btn-danger btn-sm" type="button" onclick="return confirm('Yakin hapus?')"><i class="fas fa-trash"></i></a>
                         </td>
                      </tr>
                     @endforeach
@@ -178,7 +176,8 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="tambah.php" method="post">
+            <form action="{{ route('admin.dosen.store') }}" method="post">
+              @csrf
             <div class="modal-body">
               <div class="form-group">
                     <label for="nik">Nik</label>
@@ -216,6 +215,34 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+      <div class="modal fade" id="modal-foto">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Foto Dosen </h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="{{ route('admin.dosen.foto') }}" method="post" enctype="multipart/form-data">
+              @csrf
+              <div class="modal-body">
+                <div class="form-group">
+                  <input type="text" name="nik" hidden>
+                  <label for="file">Upload Foto </label>
+                  <input type="file" class="form-control" name="file_foto" required >
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary" name="btn_foto">Upload</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
       <div class="modal fade" id="modal-impor">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -225,7 +252,8 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="impor.php" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.dosen.impor') }}" method="post" enctype="multipart/form-data">
+              @csrf
               <div class="modal-body">
                 <div class="form-group">
                   <label for="file">Upload File Template</label>
@@ -272,12 +300,13 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Edit Data Mahasiswa </h4>
+              <h4 class="modal-title">Edit Data Dosen </h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <form action="ubah.php" method="post">
+              @csrf
             <div class="modal-body">
               <div class="form-group">
                     <label for="nik">nik</label>
@@ -315,33 +344,7 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
-      <div class="modal fade" id="modal-foto">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Foto Mahasiswa </h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form action="foto.php" method="post" enctype="multipart/form-data">
-              <div class="modal-body">
-                <div class="form-group">
-                  <input type="text" name="nik" hidden>
-                  <label for="file">Upload Foto </label>
-                  <input type="file" class="form-control" name="file_foto" required >
-                </div>
-              </div>
-              <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-primary" name="btn_foto">Upload</button>
-              </div>
-            </form>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
+      
   @include('layouts.footer')
 </div>
 <!-- ./wrapper -->

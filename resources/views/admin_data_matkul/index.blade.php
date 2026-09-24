@@ -97,7 +97,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <button type="button" class="btn btn-danger mb-2"data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i> Tambah Data</button>
-                <a href="#" onclick="return confirm('Yakin ingin mereset Data?')" type="button" class="btn btn-danger mb-2"><i class="fas fa-exclamation-triangle"> Reset Data</i></a>
+                <a href="{{ route('admin.matkul.reset') }}" onclick="return confirm('Yakin ingin mereset Data?')" type="button" class="btn btn-danger mb-2"><i class="fas fa-exclamation-triangle"> Reset Data</i></a>
                 <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modal-impor"><i class="fas fa-file-excel"></i> Impor Data</button>
                 <button type="button" class="btn btn-danger mb-2" data-toggle="modal" data-target="#modal-download"><i class="fas fa-download"></i> Download Template</button>
                 <a href="#" class="btn btn-danger mb-2" target="_blank" type="button"><i class="fas fa-file-pdf"> Export pdf</i></a>
@@ -122,8 +122,8 @@
                             <td>{{ $data->jml_sks }}</td>
                             <td>{{ $data->jml_cpmk }}</td>
                             <td>
-                                <a href="" type="button" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                <a href="" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.matkul.edit', $data->kode_makul) }}" type="button" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.matkul.hapus', $data->kode_makul) }}" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -194,7 +194,8 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="impor.php" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.matkul.impor') }}" method="post" enctype="multipart/form-data">
+              @csrf
               <div class="modal-body">
                 <div class="form-group">
                   <label for="file">Upload File Template</label>

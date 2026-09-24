@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use App\Models\User;
+use App\Imports\MahasiswaImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MahasiswaController extends Controller
 {
@@ -50,6 +52,7 @@ class MahasiswaController extends Controller
 
     public function destroy($nim){
         Mahasiswa::where('nim', $nim)->delete();
+        User::where('username', $nim)->delete();
 
         return redirect()->back()->with('success', 'Data berhasil Dihapus');
     }
@@ -59,5 +62,62 @@ class MahasiswaController extends Controller
 
         return view('admin_data_mahasiswa.edit', compact('mahasiswa'));
     }
+
+    public function update(Request $request, $nim){
+        Mahasiswa::where('nim', $nim)->update([
+            'nama' => $request->nama,
+            'kontak' => $request->kontak,
+            'email' => $request->email,
+            'kelamin' => $request->kelamin,
+        ]);
+
+        User::where('username', $nim)->update([
+            'nama' => $request->nama,
+        ]);
+
+        return redirect()->route('admin.mahasiswa.index')->with('success', 'Data Berhasil Diedit');
+    }
     
+    public function foto(Request $request){
+       try {
+        $mahasiswa = Mahasiswa::where('nim', $request->nim)->first();
+
+        if(!$mahasiswa){
+            return redirect()->back()->with('error', 'Data Mahasiswa Tidak Ada');
+        }
+
+        if($request->hasFile('file_foto')){
+            $file = $request->file('file_foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = 'foto-mhs' . round(microtime(true)) . '.' . $extension;
+
+            $file->move(public_path('asset_web/img'), $filename);
+
+            $alamat_tujuan = '../asset_web/img/' . $filename;
+
+            Mahasiswa::where('nim', $request->nim)->update(['img' => $alamat_tujuan]);
+
+            return redirect()->back()->with('success', 'Berhasil Upload Foto');
+        }
+       }catch(\Exception $e){
+        return redirect()->back()->with('error', 'Terjadi Kesalahan :' . $e->getMessage());
+       }
+    }
+
+    public function reset(){
+        Mahasiswa::truncate();
+        User::where('peran', 'm')->delete();
+
+        return redirect()->back()->with('success', 'Data Berhasil DiReset');
+    }
+
+    public function impor(Request $request){
+        $request->validate([
+            'file_excel' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        Excel::import(new MahasiswaImport, $request->file('file_excel'));
+
+        return redirect()->back()->with('success', 'Berhasil Impor Data');
+    }
 }

@@ -97,7 +97,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <button type="button" class="btn btn-danger mb-2"data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i> Tambah Data</button>
-                <a href="#" onclick="return confirm('Yakin ingin mereset Data?')" type="button" class="btn btn-danger mb-2"><i class="fas fa-exclamation-triangle"> Reset Data</i></a>
+                <a href="{{ route('admin.mahasiswa.reset') }}" onclick="return confirm('Yakin ingin mereset Data?')" type="button" class="btn btn-danger mb-2"><i class="fas fa-exclamation-triangle"> Reset Data</i></a>
                 <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modal-impor"><i class="fas fa-file-excel"></i> Impor Data</button>
                 <button type="button" class="btn btn-danger mb-2" data-toggle="modal" data-target="#modal-download"><i class="fas fa-download"></i> Download Template</button>
                 <a href="#" class="btn btn-danger mb-2" target="_blank" type="button"><i class="fas fa-file-pdf"> Export pdf</i></a>
@@ -228,7 +228,8 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="impor.php" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.mahasiswa.impor') }}" method="post" enctype="multipart/form-data">
+              @csrf
               <div class="modal-body">
                 <div class="form-group">
                   <label for="file">Upload File Template</label>
@@ -327,7 +328,8 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="foto.php" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.mahasiswa.foto') }}" method="post" enctype="multipart/form-data">
+              @csrf
               <div class="modal-body">
                 <div class="form-group">
                   <input type="text" name="nim" hidden>
