@@ -15,7 +15,7 @@
   * sidebar-collapse
   * sidebar-mini
 -->
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -81,14 +81,7 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{session('success')}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div>
-        @endif
+        
         <form action="{{ route('admin.kelas.index') }}" method="get">
             @csrf
             <div class="row">
@@ -96,7 +89,7 @@
                     <div class="form-group">
                         <select name="kode_akd" class="form-control">
                             @foreach ($periode as $p)
-                                <option value="{{ old('kode_akd', $p->kode_akd) }}">{{ $p->tahun}} - {{($p->semester) == 'GL' ? 'Ganjil' : 'Genap' }}</option>
+                                <option value="{{  $p->kode_akd }}">{{ $p->tahun}} - {{($p->semester) == 'GL' ? 'Ganjil' : 'Genap' }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -112,6 +105,7 @@
                     <h3 class="card-title">Data Kelas Matkul</h3>
                 </div>
                 <div class="card-body">
+                    <button type="button" class="btn btn-danger mb-2" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"> Tambah Data</i></button>
 
                     <table class="table table-bordered table-striped" id="example1">
                         <thead>
@@ -136,18 +130,19 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $data->nama_kelas }}</td>
-                                    <td>{{ $akd->tahun .' - '. ($akd->semester) == 'GL' ? 'Ganjil' : 'Genap' }}</td>
+                                    <td>{{ $akd->tahun }} - {{ ($akd->semester) == 'GL' ? 'Ganjil' : 'Genap' }}</td>
                                     <td>{{ $matkul->nama_makul }}</td>
                                     <td>{{ $dosen->nama }}</td>
                                     <td>{{ $jrs->nama_jurusan }}</td>
                                     <td>
-                                        <a href=""><i class="fas fa-edit"></i></a>
-                                        <a href=""><i class="fas fa-trash"></i></a>
+                                        <a href="{{ route('admin.kelas.detail', $data->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-list"></i></a>
+                                        <a href="{{ route('admin.kelas.edit', $data->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('admin.kelas.hapus', $data->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin Hapus?')"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7">Tidak Ada Data</td>
+                                    <td colspan="7" align="center">Tidak Ada Data</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -168,6 +163,71 @@
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.control-sidebar -->
+  <div class="modal fade" id="modal-tambah">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Tambah Data Periode </h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="{{ route('admin.kelas.store') }}" method="post">
+              @csrf
+            <div class="modal-body">
+                @php
+                $data_akd = \App\Models\Periode::all();
+                $data_matkul = \App\Models\Matkul::all();
+                $data_dosen = \App\Models\Dosen::all();
+                $data_jrs = \App\Models\Jurusan::all();
+                @endphp
+                <div class="form-group">
+                    <label for="semester">Periode Akademik</label>
+                    <select name="kode_akd" class="form-control">
+                      @foreach ($data_akd as $akademik)
+                        <option value="{{ $akademik->kode_akd }}">{{ $akademik->tahun }} - {{ ($akademik->semester) == 'GL' ? 'Ganjil' : 'Genap' }}</option>
+                      @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="kode_makul">Mata Kuliah</label>
+                    <select name="kode_makul" class="form-control">
+                      @foreach ($data_matkul as $matkul)
+                        <option value="{{ $matkul->kode_makul }}">{{ $matkul->nama_makul }}</option>
+                      @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="kode_jurusan">Jurusan</label>
+                    <select name="kode_jurusan" class="form-control">
+                      @foreach ($data_jrs as $jrs)
+                        <option value="{{ $jrs->kode_jurusan }}">{{ $jrs->nama_jurusan }}</option>
+                      @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nik">Dosen</label>
+                    <select name="nik" class="form-control">
+                      @foreach ($data_dosen as $dosen)
+                        <option value="{{ $dosen->nik }}">{{ $dosen->nama }}</option>
+                      @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label for="nama_kelas">Nama Kelas</label>
+                  <input type="text" class="form-control" name="nama_kelas" placeholder="Masukkan Nama Kelas" required>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+              <button type="submit" class="btn btn-primary" name="btn_tambah_mahasiswa">Tambah</button>
+            </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
 
   <!-- Main Footer -->
   @include('layouts.footer')

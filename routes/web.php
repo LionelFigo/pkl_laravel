@@ -10,6 +10,7 @@ use App\Http\Controllers\MatkulController;
 use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasMatkulController;
+use App\Http\Controllers\DetailKelasController;
 
 // Login
 Route::get('/',                    [AuthController::class, 'showLogin'])->name('login');
@@ -74,6 +75,14 @@ Route::middleware(CheckRole::class. ':a')->group(function(){
     Route::post('/data_jurusan/impor', [JurusanController::class, 'impor'])->name('admin.jurusan.impor');
 
     Route::get('/data_kelas', [KelasMatkulController::class, 'index'])->name('admin.kelas.index');
+    Route::post('/data_kelas/store', [KelasMatkulController::class, 'store'])->name('admin.kelas.store');
+    Route::get('/data_kelas/hapus/{id}', [KelasMatkulController::class, 'hapus'])->name('admin.kelas.hapus');
+    Route::get('/data_kelas/edit/{id}', [KelasMatkulController::class, 'edit'])->name('admin.kelas.edit');
+    Route::put('/data_kelas/update/{id}', [KelasMatkulController::class, 'update'])->name('admin.kelas.update');
+
+    Route::get('/data_detail/{id_kls_mk}', [DetailKelasController::class, 'index'])->name('admin.kelas.detail');
+    Route::post('/data_detail/store', [DetailKelasController::class, 'store'])->name('admin.kelas.store_detail');
+    Route::get('/data_detail/hapus_detail/{nim}/{id_kls_mk}', [DetailKelasController::class, 'hapus'])->name('admin.kelas.hapus_detail');
 
 });    
 

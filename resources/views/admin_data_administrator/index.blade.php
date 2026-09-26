@@ -15,7 +15,7 @@
   * sidebar-collapse
   * sidebar-mini
 -->
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -105,9 +105,9 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $user->username }}</td>
                             <td>
-                              @if ($user->peran === 'A')
+                              @if ($user->peran === 'a')
                                 <span class="badge badge-danger">Admin</span>
-                              @elseif ($user->peran === 'M')
+                              @elseif ($user->peran === 'm')
                                 <span class="badge badge-primary">Mahasiswa</span>
                               @else
                                 <span class="badge badge-success">Dosen</span>

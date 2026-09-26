@@ -161,6 +161,14 @@ $(document).ready(function() {
     });
   });
 
+  // Toast sukses dari server
+  @if (session('success'))
+    Toast.fire({
+      icon: 'success',
+      title: '{{ session('success') }}'
+    });
+  @endif
+
   // Toast error dari server (misal PIN salah setelah submit form)
   @if (session('error'))
     Toast.fire({
