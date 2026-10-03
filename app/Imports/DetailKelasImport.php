@@ -6,9 +6,9 @@ use App\Models\DetailKelas;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\StartWithRow;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class DetailKelasImport implements ToCollection, StartWithRow
+class DetailKelasImport implements ToCollection, WithStartRow
 {
     /**
     * @param Collection $collection
@@ -33,18 +33,19 @@ class DetailKelasImport implements ToCollection, StartWithRow
                 continue;
             }
 
-            if(Mahasiswa::where('nim', $data)->first()){
-                $nim = $data;
+            $mahasiswa = Mahasiswa::where('nim', $data)->orWhere('nama', $data)->first();
 
+            if($mahasiswa){
+
+                $nim = $mahasiswa->nim;
                 $cek = DetailKelas::where('id_kls_mk', $this->id_kelas)->where('nim', $nim)->exists();
+                
                 if(!$cek){
                     DetailKelas::create([
                         'id_kls_mk' => $this->id_kelas,
                         'nim' => $nim,
                     ]);
                 }
-            }else{
-                $mhs = Mahasiswa::where('nama', $data)->first();
             }
         }
     }

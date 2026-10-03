@@ -8,18 +8,42 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckRole
 {
-    public function handle(Request $request, Closure $next, string $role): Response
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  string[]  ...$roles
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
         // Ambil data user dari session
         $user = session('user');
 
-        // Pastikan huruf besar/kecil seragam untuk pengecekan
-        $peranUser = strtolower(trim($user['peran']));
-        $peranDiizinkan = strtolower(trim($role));
+        // Jika belum login atau tidak memiliki peran
+        if (!$user || !isset($user['peran'])) {
+            session()->forget('user');
+            return redirect()->route('login')->with('error', 'User Melakukan Cross Authority');
+        }
 
-        // Jika peran tidak sesuai, tolak aksesnya
-        if ($peranUser !== $peranDiizinkan) {
-            abort(403, 'Akses Ditolak: Anda tidak memiliki izin untuk membuka halaman ini.');
+        // Kumpulkan semua role yang diizinkan (mendukung parameter variadic dan dipisah koma)
+        $allowedRoles = [];
+        foreach ($roles as $role) {
+            foreach (explode(',', $role) as $r) {
+                $clean = ltrim(strtolower(trim($r)), ':');
+                if ($clean !== '') {
+                    $allowedRoles[] = $clean;
+                }
+            }
+        }
+
+        $peranUser = strtolower(trim($user['peran']));
+
+        // Jika ada role yang ditentukan dan peran user tidak sesuai, tolak akses dan logout sesuai logika native
+        if (!empty($allowedRoles) && !in_array($peranUser, $allowedRoles)) {
+            session()->forget('user');
+            return redirect()->route('login')->with('error', 'User Melakukan Cross Authority');
         }
 
         return $next($request);

@@ -4,25 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailKelas;
 use App\Models\KelasMatkul;
-use App\Imports\DetailKelasImport;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
-class DetailKelasController extends Controller
+class DetailkelasDsnController extends Controller
 {
     public function index($id_kls_mk){
         $detail = DetailKelas::where('id_kls_mk', $id_kls_mk)->get();
         $kelas = KelasMatkul::where('id', $id_kls_mk)->first();
 
-        return view('admin_detail_kelas.index', compact('detail', 'kelas'));
+        return view('dosen_detail_kelas.index', compact('detail', 'kelas'));
     }
 
     public function hapus($nim, $id_kls_mk){
         DetailKelas::where('nim', $nim)->where('id_kls_mk', $id_kls_mk)->delete();
 
-        return redirect()->route('admin.kelas.detail', $id_kls_mk)->with('success', 'Berhasil Hapus Mahasiswa');
+        return redirect()->route('dosen.kelas.detail', $id_kls_mk)->with('success', 'Berhasil Hapus Mahasiswa');
     }
 
     public function store(Request $request){
@@ -38,16 +36,5 @@ class DetailKelasController extends Controller
 
             return redirect()->back()->with('success', 'Berhasil Menambah Mahasiswa');
         }
-    }
-
-    public function impor(Request $request){
-        $request->validate([
-            'file_excel' => 'required|mimes:xlsx,xls,csv',
-        ]);
-
-        $id_kelas = $request->id_kelas;
-        Excel::import(new DetailKelasImport($id_kelas), $request->file('file_excel'));
-
-        return redirect()->back()->with('success', 'Berhasil Impor Mahasiswa');
     }
 }

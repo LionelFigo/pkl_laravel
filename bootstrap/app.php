@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Daftarkan middleware custom check.auth
         $middleware->alias([
             'check.auth' => \App\Http\Middleware\CheckAuth::class,
+            'check.role' => \App\Http\Middleware\CheckRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\KelasMatkul;
 use App\Models\Periode;
+use App\Imports\KelasImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KelasMatkulController extends Controller
 {

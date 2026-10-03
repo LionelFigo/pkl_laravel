@@ -95,7 +95,7 @@ class MahasiswaController extends Controller
 
             $alamat_tujuan = '../asset_web/img/' . $filename;
 
-            Mahasiswa::where('nim', $request->nim)->update(['img' => $alamat_tujuan]);
+            $mahasiswa->update(['img' => $alamat_tujuan]);
 
             return redirect()->back()->with('success', 'Berhasil Upload Foto');
         }

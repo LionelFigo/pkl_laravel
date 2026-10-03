@@ -3,55 +3,107 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Home Dosen</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <link rel="stylesheet" href="{{ asset('asset_web/plugins/fontawesome-free/css/all.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('asset_web/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('asset_web/plugins/toastr/toastr.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('asset_web/dist/css/adminlte.min.css') }}">
-</head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
 
+  @include('layouts.css')
+</head>
+<!--
+`body` tag options:
+
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
+
+  * sidebar-collapse
+  * sidebar-mini
+-->
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <ul class="navbar-nav ml-auto">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('logout') }}">
-          <i class="fas fa-sign-out-alt"></i> Logout
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-user"></i>
         </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-user mr-2"></i> Profil
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="{{ route('logout') }}" class="dropdown-item">
+            <i class="fas fa-sign-out-alt mr-2"></i> Keluar
+          </a>
+        </div>
       </li>
     </ul>
   </nav>
+  <!-- /.navbar -->
 
-  <!-- Content Wrapper -->
-  <div class="content-wrapper">
-    <div class="content-header">
-      <div class="container-fluid">
-        <h1 class="m-0">Selamat Datang, Dosen!</h1>
-      </div>
-    </div>
-    <div class="content">
-      <div class="container-fluid">
-        <div class="card card-success card-outline">
-          <div class="card-body">
-            <p>Halo <strong>{{ session('user')['nama'] ?? session('user')['username'] }}</strong>, kamu login sebagai <strong>Dosen</strong>.</p>
-          </div>
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="info">
+          <a href="#" class="d-block">Sistem Manajemen</a>
         </div>
       </div>
+
+      <!-- Sidebar Menu -->
+      @include('layouts.sidebar_dosen')
+      <!-- /.sidebar-menu -->
     </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+       
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
   </div>
+  <!-- /.content-wrapper -->
 
-  <footer class="main-footer">
-    <strong>PKL Laravel</strong>
-  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  @include('layouts.footer')
 </div>
+<!-- ./wrapper -->
 
-<script src="{{ asset('asset_web/plugins/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('asset_web/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('asset_web/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-<script src="{{ asset('asset_web/plugins/toastr/toastr.min.js') }}"></script>
-<script src="{{ asset('asset_web/dist/js/adminlte.min.js') }}"></script>
+<!-- REQUIRED SCRIPTS -->
+@include('layouts.script')
 @include('layouts.modal_ganti_pin')
+
 </body>
 </html>

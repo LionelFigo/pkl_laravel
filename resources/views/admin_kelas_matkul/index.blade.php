@@ -106,6 +106,7 @@
                 </div>
                 <div class="card-body">
                     <button type="button" class="btn btn-danger mb-2" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"> Tambah Data</i></button>
+                    <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modal-impor"><i class="fas fa-file-excel"></i> Impor Data</button>
 
                     <table class="table table-bordered table-striped" id="example1">
                         <thead>
@@ -136,6 +137,7 @@
                                     <td>{{ $jrs->nama_jurusan }}</td>
                                     <td>
                                         <a href="{{ route('admin.kelas.detail', $data->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-list"></i></a>
+                                        <a href="{{ route('admin.kelas.pertemuan', $data->id) }}" class="btn btn-success btn-sm"><i class="fas fa-qrcode"></i></a>
                                         <a href="{{ route('admin.kelas.edit', $data->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                                         <a href="{{ route('admin.kelas.hapus', $data->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin Hapus?')"><i class="fas fa-trash"></i></a>
                                     </td>
@@ -228,7 +230,41 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
-
+      <div class="modal fade" id="modal-impor">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Impor Data </h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="{{ route('admin.kelas.impor_detail') }}" method="post" enctype="multipart/form-data">
+                @csrf
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="file">Upload File Template</label>
+                  <input type="int" value="" name="id_kelas" hidden>
+                  <input type="file" class="form-control" name="file_excel" required >
+                </div>
+                {{-- <div>
+                  <label for="download">Download Data</label>
+                </div>
+                <div class="form-group">
+                  <input type="int" value="" name="id_kelas" hidden>
+                  <a href="excel.php" target="_blank" class="btn btn-success btn-sm mb-2" type="button"><i class="fas fa-file-pdf"></i> Export Excel</a>
+                </div> --}}
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                  <button type="submit" class="btn btn-primary" name="impor_detail">Impor</button>
+                </div>
+              </div>    
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
   <!-- Main Footer -->
   @include('layouts.footer')
 </div>

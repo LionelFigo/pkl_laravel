@@ -62,7 +62,7 @@
       </div>
 
       <!-- Sidebar Menu -->
-      @include('layouts.sidebar_admin')
+      @include('layouts.sidebar_dosen')
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -146,7 +146,7 @@
                         <td>{{ $data->nim }}</td>
                         <td>{{ $mhs->nama }}</td>
                         <td>
-                            <a href="{{ route('admin.kelas.hapus_detail', [$data->nim, $kelas->id]) }}" class="btn btn-danger btn-sm" type="button" onclick="return confirm('Yakin Hapus?')"><i class="fas fa-trash"></i></a>
+                            <a href="{{ route('dosen.kelas.hapus', [$data->nim, $kelas->id]) }}" class="btn btn-danger btn-sm" type="button" onclick="return confirm('Yakin Hapus?')"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                     @empty
@@ -189,7 +189,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="{{ route('admin.kelas.store_detail') }}" method="post">
+            <form action="{{ route('dosen.kelas.store') }}" method="post">
             @csrf
             <div class="modal-body">
                   <div class="form-group">

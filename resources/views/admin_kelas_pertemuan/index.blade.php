@@ -121,38 +121,38 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><b>Data Mahasiswa</b></h3>
+                <h3 class="card-title"><b>Data Pertemuan</b></h3>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"> Tambah Data</i></button>
-                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modal-impor"><i class="fas fa-file-excel"></i> Impor Data</button>
+                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"> Tambah Pertemuan</i></button>
 
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th width="5%">No</th>
-                    <th>NIM</th>
-                    <th>Nama Mahasiswa</th>
+                    <th>Pertemuan Ke</th>
+                    <th>Judul Pertemuan</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
-                   @forelse ($detail as $data)
-                    @php
-                        $mhs = \App\Models\Mahasiswa::where('nim', $data->nim)->first();
-                    @endphp
+                   @forelse ($pertemuan as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->nim }}</td>
-                        <td>{{ $mhs->nama }}</td>
+                        <td>{{ $data->pertemuan_ke }}</td>
+                        <td>{{ $data->judul_pertemuan }}</td>
+                        <td>{{ $data->tanggal }}</td>
+                        <td>{{ ($data->status_presensi) == 1 ? 'Aktif' : 'Non Aktif'}}</td>
                         <td>
-                            <a href="{{ route('admin.kelas.hapus_detail', [$data->nim, $kelas->id]) }}" class="btn btn-danger btn-sm" type="button" onclick="return confirm('Yakin Hapus?')"><i class="fas fa-trash"></i></a>
+                            <a href="{{ route('admin.kelas.presensi', $data->id) }}" class="btn btn-primary btn-sm mb-2 btn-block">Presensi</a>
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="4" align="center">Tidak Ada Data</td>
-                    </tr>
+                   @empty
+                       <tr>
+                        <td colspan="6" align="center">Tidak Ada Data</td>
+                       </tr>
                    @endforelse
                   </tbody>
                 </table>
@@ -179,38 +179,33 @@
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.control-sidebar -->
-
-   <div class="modal fade" id="modal-tambah">
+      <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Tambah Data Mahasiswa </h4>
+              <h4 class="modal-title">Tambah Pertemuan </h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="{{ route('admin.kelas.store_detail') }}" method="post">
-            @csrf
+            <form action="{{ route('admin.kelas.store_pertemuan') }}" method="post">
+                @csrf
             <div class="modal-body">
-                  <div class="form-group">
-                    <input type="int" name="id_kelas" class="form-control" id="id_kelas" value="" hidden>
-                    </div>
-                      <div class="form-group">
-                        <label>Mahasiswa</label>
-                        <input type="text" name="id_kls_mk" value="{{ $kelas->id }}" hidden>
-                        <select class="form-control" name="nim">
-                          @php
-                            $data_mhs = \App\Models\Mahasiswa::all();
-                          @endphp
-                          @foreach ($data_mhs as $mahasiswa)
-                            <option value="{{ $mahasiswa->nim }}">{{ $mahasiswa->nama }}</option>
-                          @endforeach
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <input type="int" name="id_kelas" class="form-control" id="id_kelas" value="{{ $kelas->id }}" hidden>
+                </div>
+                <div class="form-group">
+                    <label for="">Judul Pertemuan</label>
+                    <input type="text" name="judul_pertemuan" class="form-control" id="judul_pertemuan" placeholder="Masukkan Judul Pertemuan">
+                </div>
+                <div class="form-group">
+                    <label for="">Tanggal Pertemuan</label>
+                    <input type="date" name="tanggal" class="form-control" id="tanggal" placeholder="Masukkan Judul Pertemuan">
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-              <button type="submit" class="btn btn-primary" name="btn_tambah_detail_mhs">Tambah</button>
+              <button type="submit" class="btn btn-primary" name="btn_tambah_pertemuan">Tambah</button>
             </div>
             </form>
           </div>
@@ -218,41 +213,7 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
-      <div class="modal fade" id="modal-impor">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Impor Data </h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form action="{{ route('admin.kelas.impor_detail') }}" method="post" enctype="multipart/form-data">
-                @csrf
-              <div class="modal-body">
-                <div class="form-group">
-                  <label for="file">Upload File Template</label>
-                  <input type="int" value="{{ $kelas->id }}" name="id_kelas" hidden>
-                  <input type="file" class="form-control" name="file_excel" required >
-                </div>
-                {{-- <div>
-                  <label for="download">Download Data</label>
-                </div>
-                <div class="form-group">
-                  <input type="int" value="" name="id_kelas" hidden>
-                  <a href="excel.php" target="_blank" class="btn btn-success btn-sm mb-2" type="button"><i class="fas fa-file-pdf"></i> Export Excel</a>
-                </div> --}}
-                <div class="modal-footer justify-content-between">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                  <button type="submit" class="btn btn-primary" name="impor_detail">Impor</button>
-                </div>
-              </div>    
-            </form>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
+   
   <!-- Main Footer -->
   @include('layouts.footer')
 </div>
