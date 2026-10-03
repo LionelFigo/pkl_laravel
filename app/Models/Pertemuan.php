@@ -16,4 +16,8 @@ class Pertemuan extends Model
         'status_presensi',
         'pertemuan_ke',
     ];
+
+    public function kelasMatkul(){
+        return $this->belongsTo(kelasMatkul::class, 'id_kelas', 'id');
+    }
 }

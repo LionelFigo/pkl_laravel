@@ -13,4 +13,12 @@ class DetailKelas extends Model
         'id_kls_mk',
         'nim',
     ];
+
+    public function kelasMatkul(){
+        return $this->belongsTo(kelasMatkul::class, 'id_kls_mk', 'id');
+    }
+
+    public function mhs(){
+        return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
+    }
 }

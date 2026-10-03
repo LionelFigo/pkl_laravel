@@ -86,16 +86,10 @@
             <form action="{{ route('admin.kelas.update', $kelas->id) }}" method="POST">
               @csrf
               @method('PUT')
-               @php
-                $akd = \App\Models\Periode::all();
-                $matkul = \App\Models\Matkul::all();
-                $dosen = \App\Models\Dosen::all();
-                $jrs = \App\Models\Jurusan::all();
-              @endphp
               <div class="form-group">
                 <label for="kode_akd">Periode Akademik</label>
                 <select name="kode_akd" class="form-control">
-                  @foreach ($akd as $akademik)
+                  @foreach ($periode as $akademik)
                     <option value="{{ $akademik->kode_akd }}" {{ old('kode_akd', $kelas->kode_akd) == $akademik->kode_akd ? 'selected' : '' }} >{{ $akademik->tahun }} - {{ $akademik->semester }}</option>
                   @endforeach
                 </select>
@@ -111,8 +105,8 @@
               <div class="form-group">
                 <label for="kode_jurusan">Jurusan</label>
                 <select name="kode_jurusan" class="form-control">
-                  @foreach ($jrs as $jurusan)
-                    <option value="{{ $jurusan->kode_jurusan }}" {{ old('kode_jurusan', $kelas->kode_jurusan) == $jurusan->kode_jurusan ? 'selected' : '' }} >{{ $jurusan->nama_jurusan }}</option>
+                  @foreach ($jurusan as $jrs)
+                    <option value="{{ $jrs->kode_jurusan }}" {{ old('kode_jurusan', $kelas->kode_jurusan) == $jrs->kode_jurusan ? 'selected' : '' }} >{{ $jrs->nama_jurusan }}</option>
                   @endforeach
                 </select>
               </div>

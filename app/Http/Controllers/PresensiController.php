@@ -18,14 +18,15 @@ class PresensiController extends Controller
 {
     public function index($id_pertemuan){
         $pertemuan = Pertemuan::where('id', $id_pertemuan)->first();
-        $kelas = KelasMatkul::where('id', $pertemuan->id_kelas)->first();
-        $matkul = Matkul::where('kode_makul', $kelas->kode_makul)->first();
-        $dosen = Dosen::where('nik', $kelas->nik)->first();
-        $jurusan = Jurusan::where('kode_jurusan', $kelas->kode_jurusan)->first();
+        $kelas = KelasMatkul::with(
+            'dosen',
+            'jurusan',
+            'matkul'
+        )->where('id', $pertemuan->id_kelas)->first();
 
         $qr = QrCode::size(200)->generate($id_pertemuan);
 
-        return view('admin_kelas_presensi.index', compact('pertemuan', 'kelas', 'matkul', 'dosen', 'jurusan', 'qr'));
+        return view('admin_kelas_presensi.index', compact('pertemuan', 'kelas', 'qr'));
     }
 
     public function tabel($id_pertemuan){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailKelas;
 use App\Models\KelasMatkul;
+use App\Models\Mahasiswa;
 use App\Imports\DetailKelasImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -13,10 +14,15 @@ use Maatwebsite\Excel\Facades\Excel;
 class DetailKelasController extends Controller
 {
     public function index($id_kls_mk){
-        $detail = DetailKelas::where('id_kls_mk', $id_kls_mk)->get();
-        $kelas = KelasMatkul::where('id', $id_kls_mk)->first();
+        $kelas = KelasMatkul::with([
+            'dosen',
+            'jurusan',
+            'periode'
+        ])->where('id', $id_kls_mk)->firstOrFail();
+        $detail = DetailKelas::with(['mhs'])->where('id_kls_mk', $id_kls_mk)->get();
+        $mahasiswa = Mahasiswa::all();
 
-        return view('admin_detail_kelas.index', compact('detail', 'kelas'));
+        return view('admin_detail_kelas.index', compact('detail', 'kelas', 'mahasiswa'));
     }
 
     public function hapus($nim, $id_kls_mk){

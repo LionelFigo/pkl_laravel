@@ -122,19 +122,13 @@
                         </thead>
                         <tbody>
                             @forelse ($kelas as $data)
-                                @php
-                                    $akd = \App\Models\Periode::where('kode_akd',$data->kode_akd)->first();
-                                    $matkul = \App\Models\Matkul::where('kode_makul',$data->kode_makul)->first();
-                                    $dosen = \App\Models\Dosen::where('nik',$data->nik)->first();
-                                    $jrs = \App\Models\Jurusan::where('kode_jurusan',$data->kode_jurusan)->first();
-                                @endphp
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $data->nama_kelas }}</td>
-                                    <td>{{ $akd->tahun }} - {{ ($akd->semester) == 'GL' ? 'Ganjil' : 'Genap' }}</td>
-                                    <td>{{ $matkul->nama_makul }}</td>
-                                    <td>{{ $dosen->nama }}</td>
-                                    <td>{{ $jrs->nama_jurusan }}</td>
+                                    <td>{{ $data->periode->tahun }} - {{ ($data->periode->semester) == 'GL' ? 'Ganjil' : 'Genap' }}</td>
+                                    <td>{{ $data->matkul->nama_makul }}</td>
+                                    <td>{{ $data->dosen->nama }}</td>
+                                    <td>{{ $data->jurusan->nama_jurusan }}</td>
                                     <td>
                                         <a href="{{ route('admin.kelas.detail', $data->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-list"></i></a>
                                         <a href="{{ route('admin.kelas.pertemuan', $data->id) }}" class="btn btn-success btn-sm"><i class="fas fa-qrcode"></i></a>
@@ -177,16 +171,10 @@
             <form action="{{ route('admin.kelas.store') }}" method="post">
               @csrf
             <div class="modal-body">
-                @php
-                $data_akd = \App\Models\Periode::all();
-                $data_matkul = \App\Models\Matkul::all();
-                $data_dosen = \App\Models\Dosen::all();
-                $data_jrs = \App\Models\Jurusan::all();
-                @endphp
                 <div class="form-group">
                     <label for="semester">Periode Akademik</label>
                     <select name="kode_akd" class="form-control">
-                      @foreach ($data_akd as $akademik)
+                      @foreach ($periode as $akademik)
                         <option value="{{ $akademik->kode_akd }}">{{ $akademik->tahun }} - {{ ($akademik->semester) == 'GL' ? 'Ganjil' : 'Genap' }}</option>
                       @endforeach
                     </select>
@@ -194,15 +182,15 @@
                 <div class="form-group">
                     <label for="kode_makul">Mata Kuliah</label>
                     <select name="kode_makul" class="form-control">
-                      @foreach ($data_matkul as $matkul)
-                        <option value="{{ $matkul->kode_makul }}">{{ $matkul->nama_makul }}</option>
+                      @foreach ($matkul as $makul)
+                        <option value="{{ $makul->kode_makul }}">{{ $makul->nama_makul }}</option>
                       @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="kode_jurusan">Jurusan</label>
                     <select name="kode_jurusan" class="form-control">
-                      @foreach ($data_jrs as $jrs)
+                      @foreach ($jurusan as $jrs)
                         <option value="{{ $jrs->kode_jurusan }}">{{ $jrs->nama_jurusan }}</option>
                       @endforeach
                     </select>
@@ -210,8 +198,8 @@
                 <div class="form-group">
                     <label for="nik">Dosen</label>
                     <select name="nik" class="form-control">
-                      @foreach ($data_dosen as $dosen)
-                        <option value="{{ $dosen->nik }}">{{ $dosen->nama }}</option>
+                      @foreach ($dosen as $dsn)
+                        <option value="{{ $dsn->nik }}">{{ $dsn->nama }}</option>
                       @endforeach
                     </select>
                 </div>

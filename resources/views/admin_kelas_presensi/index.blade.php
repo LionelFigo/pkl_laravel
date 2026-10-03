@@ -83,11 +83,11 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-3 text-center border-right">
-                                    @if ($dosen->kelamin == 'l')
-                                        <img src="{{ !empty($dosen->img) ? asset($dosen->img) : asset('asset_web/img/mhs_laki_laki.jpg') }}"
+                                    @if ($kelas->dosen->kelamin == 'l')
+                                        <img src="{{ !empty($kelas->dosen->img) ? asset($kelas->dosen->img) : asset('asset_web/img/mhs_laki_laki.jpg') }}"
                                             alt="Foto Dosen" width="200px">
                                     @else
-                                        <img src="{{ !empty($dosen->img) ? asset($dosen->img) : asset('asset_web/img/mhs_perempuan.jpg') }}"
+                                        <img src="{{ !empty($kelas->dosen->img) ? asset($kelas->dosen->img) : asset('asset_web/img/mhs_perempuan.jpg') }}"
                                             alt="Foto Dosen" width="200px">
                                     @endif
 
@@ -108,17 +108,17 @@
                                         <tr>
                                             <td>NIK</td>
                                             <td>:</td>
-                                            <td>{{ $dosen->nik }}</td>
+                                            <td>{{ $kelas->dosen->nik }}</td>
                                         </tr>
                                         <tr>
                                             <td>Nama</td>
                                             <td>:</td>
-                                            <td>{{ $dosen->nama }}</td>
+                                            <td>{{ $kelas->dosen->nama }}</td>
                                         </tr>
                                         <tr>
                                             <td>Mata Kuliah</td>
                                             <td>:</td>
-                                            <td>{{ $matkul->nama_makul }}</td>
+                                            <td>{{ $kelas->matkul->nama_makul }}</td>
                                         </tr>
                                         <tr>
                                             <td>Kelas</td>
@@ -133,7 +133,7 @@
                                         <tr>
                                             <td>Jurusan</td>
                                             <td>:</td>
-                                            <td>{{ $jurusan->nama_jurusan }}</td>
+                                            <td>{{ $kelas->jurusan->nama_jurusan }}</td>
                                         </tr>
                                         <tr>
                                             <td>Hari</td>

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
+use App\Models\Jurusan;
 use App\Models\KelasMatkul;
 use App\Models\Periode;
+use App\Models\Matkul;
 use App\Imports\KelasImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,14 +17,22 @@ class KelasMatkulController extends Controller
 {
     public function index(Request $request){
         $periode = Periode::all();
+        $dosen = Dosen::all();
+        $jurusan = Jurusan::all();
+        $matkul = Matkul::all();
 
         $kelas = [];
 
         if($request->has('kode_akd')){
-            $kelas = KelasMatkul::where('kode_akd', $request->kode_akd)->get();
+            $kelas = KelasMatkul::with(
+                'periode',
+                'dosen',
+                'jurusan',
+                'matkul'
+            )->where('kode_akd', $request->kode_akd)->get();
         }
 
-        return view('admin_kelas_matkul.index', compact('kelas', 'periode'));
+        return view('admin_kelas_matkul.index', compact('kelas', 'periode', 'dosen', 'jurusan', 'matkul'));
     }
 
     public function store(Request $request){
@@ -55,8 +66,12 @@ class KelasMatkulController extends Controller
 
     public function edit($id){
         $kelas = KelasMatkul::where('id', $id)->first();
+        $periode = Periode::all();
+        $dosen = Dosen::all();
+        $jurusan = Jurusan::all();
+        $matkul = Matkul::all();
 
-        return view('admin_kelas_matkul.edit', compact('kelas'));
+        return view('admin_kelas_matkul.edit', compact('kelas', 'periode', 'dosen', 'jurusan', 'matkul'));
     }
 
     public function update(Request $request, $id){

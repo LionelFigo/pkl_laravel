@@ -9,9 +9,9 @@
         </tr>
     </thead>
     <tbody>
-    @forelse($presensi as $index => $item)
+    @forelse($presensi as $item)
     <tr>
-        <td>{{ $index + 1 }}</td>
+        <td>{{ $loop->iteration }}</td>
         <td>{{ $item->nim }}</td>
         <td>{{ $item->nama_mhs }}</td>
         
