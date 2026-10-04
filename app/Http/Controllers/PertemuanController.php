@@ -14,7 +14,12 @@ class PertemuanController extends Controller
 {
     public function index($id_kelas){ 
         $pertemuan = Pertemuan::where('id_kelas', $id_kelas)->get();
-        $kelas = KelasMatkul::where('id', $id_kelas)->first();
+        $kelas = KelasMatkul::with([
+            'dosen',
+            'periode',
+            'jurusan',
+            'matkul'
+        ])->where('id', $id_kelas)->first();
 
         return view('admin_kelas_pertemuan.index', compact('pertemuan', 'kelas'));
     }

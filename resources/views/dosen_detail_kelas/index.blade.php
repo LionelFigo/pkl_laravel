@@ -92,10 +92,7 @@
                                         <tr>
                                             <td>Dosen Pengajar</td>
                                             <td>:</td>
-                                            @php
-                                                $dosen = \App\Models\Dosen::where('nik', $kelas->nik)->first();
-                                            @endphp
-                                            <td>{{ $dosen->nama }}</td>
+                                            <td>{{ $kelas->dosen->nama }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -104,25 +101,12 @@
                                         <tr>
                                             <td>Tahun Akademik</td>
                                             <td>:</td>
-                                            @php
-                                                $akd = \App\Models\Periode::where(
-                                                    'kode_akd',
-                                                    $kelas->kode_akd,
-                                                )->first();
-                                            @endphp
-                                            <td>{{ $akd->tahun }} -
-                                                {{ $akd->semester == 'GL' ? 'Ganjil' : 'Genap' }}</td>
+                                            <td>{{ $kelas->periode->tahun }} - {{ $kelas->periode->semester == 'GL' ? 'Ganjil' : 'Genap' }}</td>
                                         </tr>
                                         <tr>
                                             <td>Jurusan</td>
                                             <td>:</td>
-                                            @php
-                                                $jrs = \App\Models\Jurusan::where(
-                                                    'kode_jurusan',
-                                                    $kelas->kode_jurusan,
-                                                )->first();
-                                            @endphp
-                                            <td>{{ $jrs->nama_jurusan }}</td>
+                                            <td>{{ $kelas->periode->nama_jurusan }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -150,13 +134,10 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($detail as $data)
-                                        @php
-                                            $mhs = \App\Models\Mahasiswa::where('nim', $data->nim)->first();
-                                        @endphp
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->nim }}</td>
-                                            <td>{{ $mhs->nama }}</td>
+                                            <td>{{ $data->mhs->nama }}</td>
                                             <td>
                                                 <a href="{{ route('dosen.kelas.hapus', [$data->nim, $kelas->id]) }}"
                                                     class="btn btn-danger btn-sm" type="button"
@@ -215,11 +196,8 @@
                                 <label>Mahasiswa</label>
                                 <input type="text" name="id_kls_mk" value="{{ $kelas->id }}" hidden>
                                 <select class="form-control" name="nim">
-                                    @php
-                                        $data_mhs = \App\Models\Mahasiswa::all();
-                                    @endphp
-                                    @foreach ($data_mhs as $mahasiswa)
-                                        <option value="{{ $mahasiswa->nim }}">{{ $mahasiswa->nama }}</option>
+                                    @foreach ($mahasiswa as $mhs)
+                                        <option value="{{ $mhs->nim }}">{{ $mhs->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>

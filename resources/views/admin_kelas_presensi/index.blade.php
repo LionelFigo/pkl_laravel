@@ -138,12 +138,12 @@
                                         <tr>
                                             <td>Hari</td>
                                             <td>:</td>
-                                            <td></td>
+                                            <td>{{ date('l') }}</td>
                                         </tr>
                                         <tr>
                                             <td>Tanggal</td>
                                             <td>:</td>
-                                            <td>{{ $pertemuan->tanggal }}</td>
+                                            <td>{{ date('d F Y', strtotime($pertemuan->tanggal)) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Pertemuan</td>
@@ -205,8 +205,7 @@
                                     value="{{ $pertemuan->id }}" hidden>
                             </div>
                             <div class="form-group">
-                                <label>Mahasiswa</label>
-                                <input type="text" class="form-control" id="nama_mhs" readonly>
+                                <input type="text" class="form-control" id="nama_mhs" hidden>
                             </div>
                             <!-- select -->
                             <div class="form-group">

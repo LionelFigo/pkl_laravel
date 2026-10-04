@@ -87,32 +87,40 @@
 
                                 <div class="form-group">
                                     <label for="nik">NIK</label>
-                                    <input type="text" class="form-control" name="nik" id="nik" value="{{ $dosen->nik }}" readonly>
+                                    <input type="text" class="form-control" name="nik" id="nik"
+                                        value="{{ $dosen->nik }}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" name="nama" id="nama" value="{{ old('nama', $dosen->nama) }}" required>
+                                    <input type="text" class="form-control" name="nama" id="nama"
+                                        value="{{ old('nama', $dosen->nama) }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="kontak">Kontak</label>
-                                    <input type="number" name="kontak" id="kontak" maxlength="13" value="{{ old('kontak', $dosen->kontak) }}" class="form-control">
+                                    <input type="number" name="kontak" id="kontak" maxlength="13"
+                                        value="{{ old('kontak', $dosen->kontak) }}" class="form-control">
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" name="email" id="email" value="{{ old('email', $dosen->email) }}" required>
+                                    <input type="email" class="form-control" name="email" id="email"
+                                        value="{{ old('email', $dosen->email) }}" required>
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label for="kelamin">Jenis Kelamin</label>
                                     <select name="kelamin" class="form-control">
                                         <option value="">--Piih jenis Kelamin--</option>
-                                        <option value="l" {{ old('kelamin', $dosen->kelamin) == 'l' ? 'selected' : '' }}>Laki-Laki</option>
-                                        <option value="p" {{ old('kelamin', $dosen->kelamin) == 'p' ? 'selected' : '' }}>Perempuan</option>
+                                        <option value="l"
+                                            {{ old('kelamin', $dosen->kelamin) == 'l' ? 'selected' : '' }}>Laki-Laki
+                                        </option>
+                                        <option value="p"
+                                            {{ old('kelamin', $dosen->kelamin) == 'p' ? 'selected' : '' }}>Perempuan
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="modal-footer justify-content-between px-0">
                                     <a href="{{ route('admin.dosen.index') }}" class="btn btn-default">Batal</a>
                                     <button type="submit" class="btn btn-primary" name="edit">
-                                    <i class="fas fa-save mr-1"></i> Edit
+                                        <i class="fas fa-save mr-1"></i> Edit
                                     </button>
                                 </div>
                             </form>
