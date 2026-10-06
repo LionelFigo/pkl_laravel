@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Jurusan;
 use App\Imports\JurusanImport;
+use App\Exports\JurusanExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class JurusanController extends Controller
 {
@@ -66,5 +68,18 @@ class JurusanController extends Controller
         Excel::import(new JurusanImport, $request->file('file_excel'));
 
         return redirect()->back()->with('success', 'Berhasil impor Data');
+    }
+
+    public function pdf(){
+        $jurusan = Jurusan::orderBy('kode_jurusan', 'asc')->get();
+
+        $pdf = Pdf::loadView('admin_data_jurusan.pdf', compact('jurusan'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Data_Jurusan.pdf');
+    }
+
+    public function ekspor(){
+        return Excel::download(new JurusanExport, 'Data_Jurusan.xlsx');
     }
 }

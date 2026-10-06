@@ -44,14 +44,10 @@ class PresensiController extends Controller
     public function ubahStatus($id_pertemuan, $aksi){
         $pertemuan = Pertemuan::where('id', $id_pertemuan)->first();
 
-        if(!$pertemuan){
-            return redirect()->back()->with('error', 'Data Pertemuan Tidak Ditemukan');
-        }
-
         if($aksi == 'tutup'){
             $pertemuan->status_presensi = 0;
             $pertemuan->save();
-            return redirect()->back()->with('success', 'Berhasil Tutup Presensi');
+            return redirect()->back()->with('error', 'Presensi Telah Ditutup');
         }elseif($aksi == 'buka'){
             $pertemuan->status_presensi = 1;
             $pertemuan->save();

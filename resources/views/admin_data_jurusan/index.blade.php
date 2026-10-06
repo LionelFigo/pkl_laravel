@@ -82,13 +82,19 @@
                             <h3 class="card-title"><b>Data Periode</b></h3>
                         </div>
                         <div class="card-body">
-                            <button type="button" class="btn btn-danger mb-2" data-toggle="modal"
+                            <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                 data-target="#modal-tambah"><i class="fas fa-plus"> Tambah Data</i></button>
                             <a href="{{ route('admin.jurusan.reset') }}"
                                 onclick="return confirm('Yakin ingin mereset Data?')" type="button"
                                 class="btn btn-danger mb-2"><i class="fas fa-exclamation-triangle"> Reset Data</i></a>
                             <button type="button" class="btn btn-success mb-2" data-toggle="modal"
                                 data-target="#modal-impor"><i class="fas fa-file-excel"></i> Impor Data</button>
+                            <a href="{{ route('admin.jurusan.ekspor') }}" class="btn btn-success mb-2" target="_blank" type="button"><i
+                                class="fas fa-file-excel"> Export Excel</i></a>
+                            <button type="button" class="btn btn-danger mb-2" data-toggle="modal"
+                                data-target="#modal-download"><i class="fas fa-download"></i> Download Template</button> 
+                            <a href="{{ route('admin.jurusan.pdf') }}" class="btn btn-danger mb-2" target="_blank" type="button"><i
+                                class="fas fa-file-pdf"> Export pdf</i></a>
 
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
@@ -193,6 +199,32 @@
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary" name="btn_impor">Impor</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modal-download">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Download Template </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="impor.php" method="post" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <p>Silahkan Download Template Berikut</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-success"
+                                onclick="window.location.href='{{ asset('template/template_jurusan.xls') }}'">Download File</button>
                         </div>
                     </form>
                 </div>

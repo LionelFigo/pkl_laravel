@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Dosen;
 use App\Models\User;
 use App\Imports\DosenImport;
+use App\Exports\DosenExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DosenController extends Controller
 {
@@ -126,5 +128,18 @@ class DosenController extends Controller
         Excel::import(new DosenImport, $request->file('file_excel'));
 
         return redirect()->back()->with('success', 'Berhasil Impor Data');
+    }
+
+    public function pdf(){
+        $dosen = Dosen::orderBy('nik', 'asc')->get();
+
+        $pdf = Pdf::loadView('admin_data_dosen.pdf', compact('dosen'));
+        $pdf->setPaper('A4', 'potrait');
+
+        return $pdf->download('Data_Dosen.pdf');
+    }
+
+    public function ekspor(){
+        return Excel::download(new DosenExport, 'Data_Dosen.xlsx');
     }
 }

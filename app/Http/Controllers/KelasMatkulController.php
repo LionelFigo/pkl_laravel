@@ -95,4 +95,13 @@ class KelasMatkulController extends Controller
             return redirect()->route('admin.kelas.index', ['kode_akd' => $request->kode_akd])->with('success', 'Data Berhasil Diedit');
         }
     }
+
+    public function impor(Request $request){
+        $request->validate([
+            'file_excel' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        Excel::import(new KelasImport, $request->file('file_excel'));
+        return redirect()->back()->with('success', 'Berhasil Impor Data');
+    }
 }

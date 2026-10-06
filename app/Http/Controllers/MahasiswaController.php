@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use App\Imports\MahasiswaImport;
+use App\Exports\MahasiswaExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MahasiswaController extends Controller
 {
@@ -119,5 +121,18 @@ class MahasiswaController extends Controller
         Excel::import(new MahasiswaImport, $request->file('file_excel'));
 
         return redirect()->back()->with('success', 'Berhasil Impor Data');
+    }
+
+    public function pdf(){
+        $mahasiswa = Mahasiswa::orderBy('nim', 'asc')->get();
+
+        $pdf = Pdf::loadView('admin_data_mahasiswa.pdf', compact('mahasiswa'));
+        $pdf -> setPaper('A4', 'potrait');
+
+        return $pdf->download('Data_Mhs.pdf');
+    }
+
+    public function eksporExcel(){
+        return Excel::download(new MahasiswaExport, 'Data_Mahasiswa.xlsx');
     }
 }

@@ -82,14 +82,17 @@
                             <h3 class="card-title"><b>Data Periode</b></h3>
                         </div>
                         <div class="card-body">
-                            <button type="button" class="btn btn-danger mb-2" data-toggle="modal"
+                            <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                 data-target="#modal-tambah"><i class="fas fa-plus"> Tambah Data</i></button>
                             <a href="{{ route('admin.periode.reset') }}"
                                 onclick="return confirm('Yakin ingin mereset Data?')" type="button"
                                 class="btn btn-danger mb-2"><i class="fas fa-exclamation-triangle"> Reset Data</i></a>
                             <button type="button" class="btn btn-success mb-2" data-toggle="modal"
                                 data-target="#modal-impor"><i class="fas fa-file-excel"></i> Impor Data</button>
-
+                            <a href="{{ route('admin.periode.ekspor') }}" class="btn btn-success mb-2" target="_blank" type="button"><i
+                                class="fas fa-file-excel"> Export Excel</i></a>
+                            <a href="{{ route('admin.periode.pdf') }}" class="btn btn-danger mb-2" target="_blank" type="button"><i
+                                class="fas fa-file-pdf"> Export pdf</i></a>
 
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>

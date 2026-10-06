@@ -54,6 +54,8 @@ Route::middleware('check.auth')->group(function () {
         Route::post('/data_mahasiswa/foto', [MahasiswaController::class, 'foto'])->name('admin.mahasiswa.foto');
         Route::get('/data_mahasiswa/reset', [MahasiswaController::class, 'reset'])->name('admin.mahasiswa.reset');
         Route::post('/data_mahasiswa/impor', [MahasiswaController::class, 'impor'])->name('admin.mahasiswa.impor');
+        Route::get('/data_mahasiswa/ekspor', [MahasiswaController::class, 'eksporExcel'])->name('admin.mahasiswa.ekspor');
+        Route::get('/data_mahasiswa/pdf', [MahasiswaController::class, 'pdf'])->name('admin.mahasiswa.pdf');
         
         Route::get('/data_dosen', [DosenController::class,'index'])->name('admin.dosen.index');
         Route::post('/data_dosen/tambah', [DosenController::class, 'store'])->name('admin.dosen.store');
@@ -63,6 +65,8 @@ Route::middleware('check.auth')->group(function () {
         Route::post('/data_dosen/foto', [DosenController::class, 'foto'])->name('admin.dosen.foto');
         Route::get('/data_dosen/reset', [DosenController::class, 'reset'])->name('admin.dosen.reset');
         Route::post('/data_dosen/impor', [DosenController::class, 'impor'])->name('admin.dosen.impor');
+        Route::get('/data_dosen/ekspor', [DosenController::class, 'ekspor'])->name('admin.dosen.ekspor');
+        Route::get('/data_dosen/pdf', [DosenController::class, 'pdf'])->name('admin.dosen.pdf');
 
         Route::get('/data_matkul', [MatkulController::class, 'index'])->name('admin.matkul.index');
         Route::post('/data_makul/tambah', [MatkulController::class, 'store'])->name('admin.matkul.store');
@@ -71,6 +75,8 @@ Route::middleware('check.auth')->group(function () {
         Route::put('/data_matkul/update/{kode_makul}', [MatkulController::class, 'update'])->name('admin.matkul.update');
         Route::get('/data_matkul/reset', [MatkulController::class, 'reset'])->name('admin.matkul.reset');
         Route::post('/data_matkul/impor', [MatkulController::class, 'impor'])->name('admin.matkul.impor');
+        Route::get('/data_matkul/ekspor', [MatkulController::class, 'ekspor'])->name('admin.matkul.ekspor');
+        Route::get('/data_matkul/pdf', [MatkulController::class, 'pdf'])->name('admin.matkul.pdf');
 
         Route::get('/data_periode', [PeriodeController::class, 'index'])->name('admin.periode.index');
         Route::post('/data_periode/store', [PeriodeController::class, 'store'])->name('admin.periode.store');
@@ -79,6 +85,8 @@ Route::middleware('check.auth')->group(function () {
         Route::put('/data_periode/update/{kode_akd}', [PeriodeController::class, 'update'])->name('admin.periode.update');
         Route::get('/data_periode/reset', [PeriodeController::class, 'reset'])->name('admin.periode.reset');
         Route::post('/data_periode/impor', [PeriodeController::class, 'impor'])->name('admin.periode.impor');
+        Route::get('/data_periode/ekspor', [PeriodeController::class, 'ekspor'])->name('admin.periode.ekspor');
+        Route::get('/data_periode/pdf', [PeriodeController::class, 'pdf'])->name('admin.periode.pdf');
 
         Route::get('/data_jurusan', [JurusanController::class, 'index'])->name('admin.jurusan.index');
         Route::post('/data_jurusan/store', [JurusanController::class, 'store'])->name('admin.jurusan.store');
@@ -87,6 +95,8 @@ Route::middleware('check.auth')->group(function () {
         Route::put('/data_jurusan/update/{kode_jurusan}', [JurusanController::class, 'update'])->name('admin.jurusan.update');
         Route::get('/data_jurusan/reset', [JurusanController::class, 'reset'])->name('admin.jurusan.reset');
         Route::post('/data_jurusan/impor', [JurusanController::class, 'impor'])->name('admin.jurusan.impor');
+        Route::get('/data_jurusan/ekspor', [JurusanController::class, 'ekspor'])->name('admin.jurusan.ekspor');
+        Route::get('/data_jurusan/pdf', [JurusanController::class, 'pdf'])->name('admin.jurusan.pdf');
 
         Route::get('/data_kelas', [KelasMatkulController::class, 'index'])->name('admin.kelas.index');
         Route::post('/data_kelas/store', [KelasMatkulController::class, 'store'])->name('admin.kelas.store');
@@ -102,6 +112,8 @@ Route::middleware('check.auth')->group(function () {
 
         Route::get('/data_pertemuan/{id_kelas}', [PertemuanController::class, 'index'])->name('admin.kelas.pertemuan');
         Route::post('/data_pertemuan/store', [PertemuanController::class, 'store'])->name('admin.kelas.store_pertemuan');
+        Route::post('/data_pertemuan/persen', [PertemuanController::class, 'editPersen'])->name('admin.kelas.persen');
+        Route::get('/data_pertemuan/pdf/{id_kelas}', [PertemuanController::class, 'pdf'])->name('admin.kelas.pertemuan_pdf');
 
         Route::get('/data_presensi/{id_pertemuan}', [PresensiController::class, 'index'])->name('admin.kelas.presensi');
         Route::get('/data_presensi/tabel/{id_pertemuan}', [PresensiController::class, 'tabel'])->name('presensi.tabel');

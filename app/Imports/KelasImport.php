@@ -34,15 +34,44 @@ class KelasImport implements ToCollection, WithStartRow
             $nama_kelas = $row[6];
             $mahasiswa = $row[7];
 
-            if(empty($sems) || empty($thn) || empty($matkul) || empty($dosen) || empty($jrs) || empty($nama_kelas) || empty($mhs)){
+            if(empty($semester) || empty($tahun) || empty($mata_kuliah) || empty($dosen) || empty($jurusan) || empty($nama_kelas) || empty($mahasiswa)){
                 continue;
             }
 
-            $periode = Periode::where('semester', $semester)->where('tahun', $tahun)->first();
-            $matkul = Matkul::where('nama_makul', $mata_kuliah)->first();
-            $dsn = Dosen::where('nama', $dosen)->first();
-            $mhs = Mahasiswa::where('nama', $mahasiswa)->orWhere('nim', $mahasiswa)->first();
+            $periode = Periode::where('semester', $semester)->where('tahun', $tahun)->firstOrFail();
+            $matkul = Matkul::where('nama_makul', $mata_kuliah)->firstOrFail();
+            $dsn = Dosen::where('nama', $dosen)->firstOrFail();
+            $jrs = Jurusan::where('nama_jurusan', $jurusan)->firstOrFail();
+            $mhs = Mahasiswa::where('nama', $mahasiswa)->orWhere('nim', $mahasiswa)->firstOrFail();
 
+            $cek = KelasMatkul::where('kode_akd', $periode->kode_akd)
+                                ->where('kode_makul', $matkul->kode_makul)
+                                ->where('kode_jurusan', $jrs->kode_jurusan)
+                                ->where('nik', $dsn->nik)
+                                ->where('nama_kelas', $nama_kelas)
+                                ->first();
+            if($cek){
+                $cek_mhs = DetailKelas::where('id_kls_mk', $cek->id)->where('nim', $mhs->nim)->exists();
+                if(!$cek_mhs){
+                    DetailKelas::create([
+                        'id_kls_mk' => $cek->id,
+                        'nim' => $mhs->nim,
+                    ]);
+                }
+            }else{
+                $kelas = KelasMatkul::create([
+                    'kode_akd' => $periode->kode_akd,
+                    'kode_makul' => $matkul->kode_makul,
+                    'kode_jurusan' => $jrs->kode_jurusan,
+                    'nik' => $dsn->nik,
+                    'nama_kelas' => $nama_kelas,
+                ]);
+
+                DetailKelas::create([
+                    'id_kls_mk' => $kelas->id,
+                    'nim' => $mhs->nim,
+                ]);
+            }
         }
     }
 }
