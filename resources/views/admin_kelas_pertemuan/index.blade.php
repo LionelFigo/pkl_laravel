@@ -123,6 +123,8 @@
                                 data-target="#modal-tambah"><i class="fas fa-plus"> Tambah Pertemuan</i></button>
                             <button type="button" class="btn btn-warning mb-2" data-toggle="modal"
                                 data-target="#modal-persen"><i class="fas fa-edit"> Edit Persentase</i></button>
+                            <a href="{{ route('admin.kelas.presensi_pdf', $kelas->id) }}" class="btn btn-danger mb-2" target="_blank" type="button"><i
+                                    class="fas fa-file-pdf"> Cetak Laporan Absensi</i></a>
                             <a href="{{ route('admin.kelas.pertemuan_pdf', $kelas->id) }}" class="btn btn-danger mb-2" target="_blank" type="button"><i
                                     class="fas fa-file-pdf"> Cetak Laporan</i></a>
 

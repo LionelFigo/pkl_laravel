@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class PeriodeImport implements ToCollection
+class PeriodeImport implements ToCollection, WithStartRow
 {
     /**
     * @param Collection $collection
@@ -31,12 +31,13 @@ class PeriodeImport implements ToCollection
 
             $cek_periode = Periode::where('kode_akd', $kode_akd)->exists();
 
+            $st = ($status == 'Aktif') ? '1' : '0';
             if(!$cek_periode){
-                Jurusan::create([
+                Periode::create([
                     'kode_akd' => $kode_akd,
                     'semester' => $semester,
                     'tahun' => $tahun,
-                    'status' => $status,
+                    'is_active' => $st,
                 ]);
             }
         }

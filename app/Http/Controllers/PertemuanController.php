@@ -114,4 +114,25 @@ class PertemuanController extends Controller
 
         return $pdf->stream('laporan_presensi.pdf');
     }
+
+    public function pdf_presensi($id_kelas){
+        $kelas = KelasMatkul::where('id', $id_kelas)->first();
+        $dosen = Dosen::where('nik', $kelas->nik)->first();
+        $matkul = Matkul::where('kode_makul', $kelas->kode_makul)->first();
+        $akademik = Periode::where('kode_akd', $kelas->kode_akd)->first();
+        $pertemuan = Pertemuan::where('id_kelas', $id_kelas)->with('presensi.mhs')->get();
+
+        $data = [
+            'kelas' => $kelas,
+            'dosen' => $dosen,
+            'matkul' => $matkul,
+            'akd' => $akademik,
+            'pertemuan' => $pertemuan,
+        ];
+
+        $pdf = Pdf::loadView('admin_kelas_pertemuan.pdf_absensi', $data);
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->stream('laporan_absensi.pdf');
+    }
 }

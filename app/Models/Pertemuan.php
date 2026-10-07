@@ -20,4 +20,8 @@ class Pertemuan extends Model
     public function kelasMatkul(){
         return $this->belongsTo(kelasMatkul::class, 'id_kelas', 'id');
     }
+    
+    public function presensi(){
+        return $this->hasMany(Presensi::class, 'id_pertemuan', 'id');
+    }
 }

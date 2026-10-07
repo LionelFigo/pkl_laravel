@@ -114,6 +114,7 @@ Route::middleware('check.auth')->group(function () {
         Route::post('/data_pertemuan/store', [PertemuanController::class, 'store'])->name('admin.kelas.store_pertemuan');
         Route::post('/data_pertemuan/persen', [PertemuanController::class, 'editPersen'])->name('admin.kelas.persen');
         Route::get('/data_pertemuan/pdf/{id_kelas}', [PertemuanController::class, 'pdf'])->name('admin.kelas.pertemuan_pdf');
+        Route::get('/data_pertemuan/pdf_absensi/{id_kelas}', [PertemuanController::class, 'pdf_presensi'])->name('admin.kelas.presensi_pdf');
 
         Route::get('/data_presensi/{id_pertemuan}', [PresensiController::class, 'index'])->name('admin.kelas.presensi');
         Route::get('/data_presensi/tabel/{id_pertemuan}', [PresensiController::class, 'tabel'])->name('presensi.tabel');

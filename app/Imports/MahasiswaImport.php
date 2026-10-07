@@ -28,7 +28,7 @@ class MahasiswaImport implements ToCollection, WithStartRow
             $kelamin = $row[5];
 
             if(empty($nim) || empty($nama) || empty($kontak) || empty($email) || empty($kelamin)){
-                contine;
+                continue;
             }
 
             $cek_mhs = Mahasiswa::where('nim', $nim)->exists();

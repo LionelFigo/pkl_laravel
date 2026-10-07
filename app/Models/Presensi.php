@@ -14,4 +14,12 @@ class Presensi extends Model
         'nim',
         'status_kehadiran',
     ];
+
+    public function pertemuan(){
+        return $this->belongsTo(Pertemuan::class, 'id_pertemuan', 'id');
+    }
+
+    public function mhs(){
+        return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
+    }
 }

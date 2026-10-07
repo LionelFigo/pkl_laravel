@@ -24,52 +24,53 @@
 
 <!-- Page specific script -->
 <script>
-  $(function () {
-    if ($("#example1").length) {
-      $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    }
-    if ($('#example2').length) {
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
-    }
+    $(function() {
+        if ($("#example1").length) {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        }
+        if ($('#example2').length) {
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        }
 
-    var Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        @if (session('success'))
+            Toast.fire({
+                icon: 'success',
+                title: '{{ session('success') }}'
+            });
+        @endif
+
+        @if (session('error'))
+            Toast.fire({
+                icon: 'error',
+                title: '{{ session('error') }}'
+            });
+        @endif
+
+        @if ($errors->any())
+            Toast.fire({
+                icon: 'error',
+                title: '{{ $errors->first() }}'
+            });
+        @endif
     });
-
-    @if (session('success'))
-      Toast.fire({
-        icon: 'success',
-        title: '{{ session('success') }}'
-      });
-    @endif
-
-    @if (session('error'))
-      Toast.fire({
-        icon: 'error',
-        title: '{{ session('error') }}'
-      });
-    @endif
-
-    @if ($errors->any())
-      Toast.fire({
-        icon: 'error',
-        title: '{{ $errors->first() }}'
-      });
-    @endif
-  });
 </script>
-
