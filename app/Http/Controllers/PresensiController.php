@@ -65,13 +65,6 @@ class PresensiController extends Controller
 
         $presensi = Presensi::where('id', $request->id_presensi)->first();
 
-        if(!$presensi){
-            if($request->ajax()){
-                return response()->json(['status' => false, 'message' => 'Data Presensi Tidak Ditemukan'], 404);
-            }
-            return redirect()->back()->with('error', 'Data Presensi Tidak Ditemukan');
-        }
-
         $presensi->status_kehadiran = $request->status;
         $presensi->save();
 

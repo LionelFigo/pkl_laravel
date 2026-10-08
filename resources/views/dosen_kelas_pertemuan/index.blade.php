@@ -121,6 +121,13 @@
                         <div class="card-body">
                             <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                 data-target="#modal-tambah"><i class="fas fa-plus"> Tambah Pertemuan</i></button>
+                            <button type="button" class="btn btn-warning mb-2" data-toggle="modal"
+                                data-target="#modal-persen"><i class="fas fa-edit"> Edit Persentase</i></button>
+                            <a href="{{ route('dosen.kelas.presensi_pdf', $kelas->id) }}" class="btn btn-danger mb-2" target="_blank" type="button"><i
+                                    class="fas fa-file-pdf"> Cetak Laporan Absensi</i></a>
+                            <a href="{{ route('dosen.kelas.pertemuan_pdf', $kelas->id) }}" class="btn btn-danger mb-2" target="_blank" type="button"><i
+                                    class="fas fa-file-pdf"> Cetak Laporan</i></a>
+
 
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
@@ -215,6 +222,35 @@
             <!-- /.modal-dialog -->
         </div>
 
+        <div class="modal fade" id="modal-persen">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Bobot Persen </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('dosen.kelas.persen') }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="file">Masukkan Jumlah Persentase</label>
+                                <input type="text" class="form-control" name="id_kelas" value="{{ $kelas->id }}" hidden>
+                                <input type="number" class="form-control" name="persen" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary" name="btn_impor">Edit</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
         <!-- Main Footer -->
         @include('layouts.footer')
     </div>

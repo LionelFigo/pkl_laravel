@@ -129,6 +129,9 @@ Route::middleware('check.auth')->group(function () {
 
         Route::get('/dosen/pertemuan/{id_kelas}', [PertemuanDsnController::class, 'index'])->name('dosen.kelas.pertemuan');
         Route::post('/dosen/pertemuan/store', [PertemuanDsnController::class, 'store'])->name('dosen.kelas.pertemuan_store');
+        Route::post('/dosen/persen', [PertemuanDsnController::class, 'editPersen'])->name('dosen.kelas.persen');
+        Route::get('/dosen/pertemuan/pdf/{id_kelas}', [PertemuanDsnController::class, 'pdf'])->name('dosen.kelas.pertemuan_pdf');
+        Route::get('/dosen/pertemuan/pdf_absensi/{id_kelas}', [PertemuanDsnController::class, 'pdf_presensi'])->name('dosen.kelas.presensi_pdf');
 
         Route::get('/dosen/detail_kelas/{id_kls_mk}', [DetailkelasDsnController::class, 'index'])->name('dosen.kelas.detail');
         Route::get('/dosen/detail_hapus/{nim}/{id_kls_mk}', [DetailkelasDsnController::class, 'hapus'])->name('dosen.kelas.hapus');
